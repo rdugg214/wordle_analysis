@@ -27,16 +27,14 @@ class Wordle():
 
         guess_accuracy = self._compare_words(guess_word)
 
-        # Check if the guess was correct
-        total_score = 0
-        for score in guess_accuracy:
-            total_score += score
+        self.__check_winner(guess_accuracy)
 
-        if score == 10:
-            print(f"Congratuations you did it, you solved for the word '{self.target_word}' in just {self.guess_count} guesses!")
-
-        if self.guess_count > 6:
-            print(f"Better luck next time. The correct answer was '{self.target_word}'")
+        return guess_accuracy
+    
+    def _compare_words(self, guess_word:str) -> list:
+        guess_accuracy = [0, 0, 0, 0, 0]
+        guess_accuracy = self.__is_correct(guess_word, guess_accuracy)
+        guess_accuracy = self.__is_patially_correct(guess_word, guess_accuracy)
 
         return guess_accuracy
 
@@ -53,13 +51,6 @@ class Wordle():
 
     def __is_invalid(self, guess_word:str):
         return guess_word == self.words.any()
-
-    def _compare_words(self, guess_word:str) -> list:
-        guess_accuracy = [0, 0, 0, 0, 0]
-        guess_accuracy = self.__is_correct(guess_word, guess_accuracy)
-        guess_accuracy = self.__is_patially_correct(guess_word, guess_accuracy)
-
-        return guess_accuracy
 
     def __is_correct(self, guess_word, guess_accuracy) -> list:
         for i in range(len(guess_word)):
@@ -97,27 +88,16 @@ class Wordle():
 
         return guess_accuracy
 
+    def __check_winner(self, guess_accuracy):
+        # Check if the guess was correct
+        total_score = 0
+        for score in guess_accuracy:
+            total_score += score
 
-    def calc_duplication(self):
-        self.duplicated_letters = {}
-
-        if len(set(self.target_word)) != len(self.target_word):
-            return
-
-        
-        for i in range(self.target_word):
-            if self.target_word[i] in self.duplicated_letters.keys():
-                self.duplicated_letters[self.target_word[i]] += 1
-            else:
-                self.duplicated_letters[self.target_word[i]] = 1
-
-        to_remove = []
-        for key in self.duplicated_letters:
-            if self.duplicated_letters[key] == 1:
-                to_remove.append(key)
-                
-        for key in to_remove:
-            self.duplicated_letters.pop(key, None)
+        if score == 10:
+            print(f"Congratuations you did it, you solved for the word '{self.target_word}' in just {self.guess_count} guesses!")
+        elif self.guess_count > 6:
+            print(f"Better luck next time. The correct answer was '{self.target_word}'")
 
 
 class WordleInfinite(Wordle):
