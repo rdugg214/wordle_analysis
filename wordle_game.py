@@ -94,7 +94,7 @@ class Wordle():
         for score in guess_accuracy:
             total_score += score
 
-        if score == 10:
+        if total_score == 10:
             print(f"Congratuations you did it, you solved for the word '{self.target_word}' in just {self.guess_count} guesses!")
         elif self.guess_count > 6:
             print(f"Better luck next time. The correct answer was '{self.target_word}'")
