@@ -46,7 +46,7 @@ class Wordle():
 
     def __select_random_word(self, seed:int=None):
         if not seed is None:
-            np.random.seed = seed
+            np.random.seed(seed)
         return self.words[np.random.randint(0, len(self.words))]
 
     def __is_invalid(self, guess_word:str):
