@@ -61,19 +61,23 @@ class Wordle():
 
     def __is_patially_correct(self, guess_word, guess_accuracy) -> list:
         for i in range(len(guess_word)):
+            # ignore if in correct postion
             if guess_accuracy[i] == 2:
                 continue
 
+            # ignore if not in word
             current_letter = guess_word[i]
             in_word = current_letter in self.target_word
             if not in_word:
                 continue
 
+            # get number of occurances of letter in word
             target_dup_count = 0
             for j in range(len(self.target_word)):
                 if self.target_word[j] == current_letter:
                     target_dup_count += 1
 
+            # count number of occurances of letter already accounted for by previous fully correct guesses or partially correct guesses
             accounted_for_guesses = 0
             for j in range(len(guess_word)):
                 if guess_word[j] != current_letter:
@@ -82,7 +86,7 @@ class Wordle():
                 if j < i or guess_accuracy[j] == 2:
                     accounted_for_guesses += 1
 
-
+            # if there are more occurances than accounted for occurances give partially correct
             if accounted_for_guesses < target_dup_count:
                 guess_accuracy[i] = 1
 
