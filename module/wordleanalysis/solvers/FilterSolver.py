@@ -1,6 +1,6 @@
 import pandas as pd
 
-from WordleSolver import WordleSolver
+from wordleanalysis.solvers.WordleSolver import WordleSolver
 
 class FilterSolver(WordleSolver):
     def __init__(self, guess_words:pd.Series, letter_masks:dict[pd.Series]) -> None:

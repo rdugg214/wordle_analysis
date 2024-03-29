@@ -1,2 +1,4 @@
 datasets/*
 __pycache__/*
+module/build/*
+module/wordleanalysis.egg-info
