@@ -42,7 +42,7 @@ class Wordle():
         if not self.words is None:
             return
 
-        self.words = pd.read_csv("./datasets/words.txt", header=None).iloc[:, 0]
+        self.words = pd.read_csv("../datasets/words.txt", header=None).iloc[:, 0]
 
     def __select_random_word(self, seed:int=None):
         if not seed is None:
