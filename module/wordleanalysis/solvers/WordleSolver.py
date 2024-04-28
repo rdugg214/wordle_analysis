@@ -7,7 +7,7 @@ class WordleSolver:
     def __init__(self) -> None:
         pass
 
-    def attempt_solve(self, wordle_game: Wordle, number_guesses: int = 5) -> GameDetails:
+    def attempt_solve(self, wordle_game: Wordle, number_guesses: int = 6) -> GameDetails:
         game_details = GameDetails()
         for i in range(number_guesses):
             guess_word = self.guess()
