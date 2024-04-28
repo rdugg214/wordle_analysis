@@ -5,6 +5,9 @@ class Wordle():
     def __init__(self):
         self.target_word:str = None
         self.words:pd.Series = None
+        self.num_words = None
+
+        self.WORD_LENGTH = 5
 
     def create_new_game(self, target_word:str=None, seed=None):
         self.__ensure_word_list()
@@ -43,24 +46,25 @@ class Wordle():
             return
 
         self.words = pd.read_csv("../datasets/words.txt", header=None).iloc[:, 0]
+        self.num_words = len(self.words)
 
     def __select_random_word(self, seed:int=None):
         if not seed is None:
             np.random.seed(seed)
-        return self.words[np.random.randint(0, len(self.words))]
+        return self.words[np.random.randint(0, self.num_words)]
 
     def __is_invalid(self, guess_word:str):
         return guess_word == self.words.any()
 
     def __is_correct(self, guess_word, guess_accuracy) -> list:
-        for i in range(len(guess_word)):
+        for i in range(self.WORD_LENGTH):
             if guess_word[i] == self.target_word[i]:
                 guess_accuracy[i] = 2
 
         return guess_accuracy
 
     def __is_patially_correct(self, guess_word, guess_accuracy) -> list:
-        for i in range(len(guess_word)):
+        for i in range(self.WORD_LENGTH):
             # ignore if in correct postion
             if guess_accuracy[i] == 2:
                 continue
@@ -73,13 +77,13 @@ class Wordle():
 
             # get number of occurances of letter in word
             target_dup_count = 0
-            for j in range(len(self.target_word)):
+            for j in range(self.WORD_LENGTH):
                 if self.target_word[j] == current_letter:
                     target_dup_count += 1
 
             # count number of occurances of letter already accounted for by previous fully correct guesses or partially correct guesses
             accounted_for_guesses = 0
-            for j in range(len(guess_word)):
+            for j in range(self.WORD_LENGTH):
                 if guess_word[j] != current_letter:
                     continue
                 
