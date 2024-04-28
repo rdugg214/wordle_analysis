@@ -10,12 +10,13 @@ class FilterSolver(WordleSolver):
         self.letter_masks = letter_masks
 
     def guess(self) -> str:
-        return self.guess_words[self.words_matching_guess_mask].iloc[0]["words"]
+        return self.guess_words[self.words_matching_guess_mask].iloc[0]
     
     def prepare_next_guess(self, guess_word: str, guess_score: list[int]):
-        self.update_mask(guess_word, guess_score, letter_cols)
+        self.update_mask(guess_word, guess_score)
     
-    def update_mask(self, guess_word:str, guess_score:list[int], letter_cols):
+    def update_mask(self, guess_word:str, guess_score:list[int]):
+        letter_cols = ["letter_1", "letter_2", "letter_3", "letter_4", "letter_5"]
         for letter_score, letter, letter_col in zip(guess_score, guess_word, letter_cols):
             mask = self.letter_masks[letter][letter_col]
 

@@ -10,4 +10,4 @@ class GameDetails:
         self.number_guesses += 1
 
     def ran_out_of_guesses(self):
-        self.number_guesses += 1
+        self.number_guesses = -1
