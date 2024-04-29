@@ -1,3 +1,5 @@
+import pandas as pd
+
 class GameDetails:
     def __init__(self) -> None:
         self.guesses = []
@@ -11,3 +13,10 @@ class GameDetails:
 
     def ran_out_of_guesses(self):
         self.number_guesses = -1
+
+    def get_details_dict(self) -> dict:
+        return {
+            "guesses": self.guesses,
+            "guess_scores": self.guess_scores,
+            "final_number_guesses": self.number_guesses,
+        }
