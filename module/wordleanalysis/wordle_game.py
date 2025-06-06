@@ -2,15 +2,14 @@ import pandas as pd
 import numpy as np
 
 class Wordle():
-    def __init__(self):
-        self.target_word:str = None
-        self.words:pd.Series = None
-        self.num_words = None
+    def __init__(self, words_csv_path:str="../datasets/words.txt"):
+        self.words_csv_path = words_csv_path
+        self.__ensure_word_list()
+        self.guess_count = 0
 
         self.WORD_LENGTH = 5
 
     def create_new_game(self, target_word:str=None, seed=None):
-        self.__ensure_word_list()
         self.guess_count = 0
 
         if target_word is None:
@@ -42,10 +41,7 @@ class Wordle():
         return guess_accuracy
 
     def __ensure_word_list(self):
-        if not self.words is None:
-            return
-
-        self.words = pd.read_csv("../datasets/words.txt", header=None).iloc[:, 0]
+        self.words = pd.read_csv(self.words_csv_path, header=None).iloc[:, 0]
         self.num_words = len(self.words)
 
     def __select_random_word(self, seed:int=None):
