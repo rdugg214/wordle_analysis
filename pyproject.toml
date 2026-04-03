@@ -1,5 +1,5 @@
 [project]
-name = "nyt_games_solvers"
+name = "nyt_games"
 version = "0.1.0"
 dependencies = [
     "pandas",

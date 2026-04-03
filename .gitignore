@@ -3,3 +3,6 @@ datasets/*
 module/build/*
 module/wordleanalysis.egg-info
 uv.lock
+build/*
+src/nyt_games_solvers.egg-info/*
+src/nyt_games.egg-info/*
