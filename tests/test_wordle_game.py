@@ -24,10 +24,3 @@ def test_guess_duplicated_letters():
     wordle.create_new_game("about")
     assert [0, 2, 0, 0, 0] == wordle.make_guess("bbbbb")
 
-
-if __name__ == "__main__":
-    test_setup()
-    test_guess_invalid()
-    test_guess_all_incorrect()
-    test_guess_duplicated_letters()
-

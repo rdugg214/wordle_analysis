@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 class Wordle():
-    def __init__(self, words_csv_path:str="../datasets/words.txt"):
+    def __init__(self, words_csv_path:str="./datasets/words.txt"):
         self.words_csv_path = words_csv_path
         self.__ensure_word_list()
         self.guess_count = 0
