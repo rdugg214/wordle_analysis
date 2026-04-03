@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
-from wordleanalysis.wordle_game import Wordle
-from wordleanalysis.solvers.GameDetails import GameDetails
+from src.games.wordle.wordle_game import Wordle
+from src.solvers.wordle.GameDetails import GameDetails
 
 class WordleSolver:
     def __init__(self) -> None:
