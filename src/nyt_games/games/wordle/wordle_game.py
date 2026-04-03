@@ -18,7 +18,7 @@ class Wordle():
         self.target_word = target_word
 
     def make_guess(self, guess_word) -> list:
-        if self.guess_count > 6:
+        if self.guess_count >= 6:
             print(f"Sorry you already ran out of guesses, the word was '{self.target_word}', try again")
             return None
 
@@ -50,7 +50,7 @@ class Wordle():
         return self.words[np.random.randint(0, self.num_words)]
 
     def __is_invalid(self, guess_word:str):
-        return guess_word == self.words.any()
+        return not (self.words == guess_word).any()
 
     def __is_correct(self, guess_word, guess_accuracy) -> list:
         for i in range(self.WORD_LENGTH):
