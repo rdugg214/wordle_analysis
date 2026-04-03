@@ -10,6 +10,9 @@ dependencies = [
     "matplotlib",
     "plotly",
     "jupyter",
+    "plotly",
+    "dash",
+    "dash_ag_grid",
 ]
 
 [build-system]
