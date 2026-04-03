@@ -1,4 +1,4 @@
-from wordle_game import Wordle, WordleInfinite
+from nyt_games.games.wordle.wordle_game import Wordle, WordleInfinite
 
 def test_setup():
     pass
