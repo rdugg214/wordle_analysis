@@ -5,19 +5,6 @@ from nyt_games.games.wordle.wordle_game import Wordle
 
 app = Dash(__name__)
 
-df = pd.DataFrame({
-    "letter_1": ['', '', '', '', ''],
-    "letter_2": ['', '', '', '', ''],
-    "letter_3": ['', '', '', '', ''],
-    "letter_4": ['', '', '', '', ''],
-    "letter_5": ['', '', '', '', ''],
-    "letter_1_score": [-1, -1, -1, -1, -1],
-    "letter_2_score": [-1, -1, -1, -1, -1],
-    "letter_3_score": [-1, -1, -1, -1, -1],
-    "letter_4_score": [-1, -1, -1, -1, -1],
-    "letter_5_score": [-1, -1, -1, -1, -1],
-})
-
 def setup_grid_values() -> list[dict[str, str|int]]:
     base_grids = {}
     for i in range(1, 6):
@@ -32,8 +19,10 @@ def setup_grid_values() -> list[dict[str, str|int]]:
     
     return grid_values
 
+grid_values = setup_grid_values()
+
 column_defs = []
-for column in df.columns:
+for column in grid_values[0].keys():
     col_num = int(column[7:8])
     is_score_column = column[-6:] == '_score'
     column_def = {
@@ -69,14 +58,12 @@ default_cell_details = "text-center"
 
 grid = dag.AgGrid(
     id="wordle-grid",
-    rowData=setup_grid_values(),
+    rowData=grid_values,
     columnDefs=column_defs,
     defaultColDef={"minWidth":50, "maxWidth": 50},
     columnSize="sizeToFit",
     dashGridOptions={"animateRows": False, "headerHeight":0, "editable": True, "flex": 1}
 )
-
-dcc.Input(id="dfalse", type="text", placeholder="Debounce False")
 
 input_field = html.Div(
     [
