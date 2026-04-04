@@ -98,6 +98,11 @@ def update(word_input:str, row_data:list[dict[str, str|int]]):
     if word_input is None or len(word_input) != 5:
         return row_data
     
+    word_score = wordle.make_guess(word_input)
+
+    if word_score is None:
+        return row_data
+    
     to_update_index = 0
     for i in range(6):
         if row_data[i]['letter_1_score'] == -1:
@@ -107,7 +112,6 @@ def update(word_input:str, row_data:list[dict[str, str|int]]):
     for i, letter in enumerate(word_input.upper()):
         row_data[to_update_index][f'letter_{i+1}'] = letter
 
-    word_score = wordle.make_guess(word_input)
 
     for i, letter_score in enumerate(word_score):
         row_data[to_update_index][f'letter_{i+1}_score'] = letter_score
