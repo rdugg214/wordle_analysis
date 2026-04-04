@@ -60,9 +60,8 @@ grid = dag.AgGrid(
     id="wordle-grid",
     rowData=grid_values,
     columnDefs=column_defs,
-    defaultColDef={"minWidth":50, "maxWidth": 50},
     columnSize="sizeToFit",
-    dashGridOptions={"animateRows": False, "headerHeight":0, "editable": True, "flex": 1}
+    dashGridOptions={"animateRows": False, "headerHeight":0, "editable": True, "flex": 1},
 )
 
 input_field = html.Div(
@@ -105,7 +104,7 @@ def update(word_input:str, row_data:list[dict[str, str|int]]):
 
     return row_data
 
-app.layout = html.Div([html.H4("Wordle"), grid, html.Div(id="quickstart-output"), input_field])
+app.layout = html.Div([html.H4("Wordle"), html.Div(grid, style={"width": 300}), html.Div(id="quickstart-output"), input_field])
 
 
 if __name__ == '__main__':
