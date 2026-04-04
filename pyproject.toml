@@ -24,5 +24,6 @@ where = ["src"]
 
 [project.optional-dependencies]
 dev = [
-    "pytest"
+    "pytest",
+    "ruff",
 ]
