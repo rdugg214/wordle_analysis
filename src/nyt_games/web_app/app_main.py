@@ -4,7 +4,7 @@ import numpy as np
 
 from wordleanalysis.wordle_game import Wordle
 
-st.title('Wordle')
+st.title("Wordle")
 
 # https://github.com/ccrsxx/pywebapp/blob/main/app.py
 

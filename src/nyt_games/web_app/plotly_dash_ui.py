@@ -1,33 +1,35 @@
-from dash import dcc,Dash, html, Input, Output, State
+from dash import dcc, Dash, html, Input, Output, State
 import dash_ag_grid as dag
 import pandas as pd
 from nyt_games.games.wordle.wordle_game import Wordle
 
 app = Dash(__name__)
 
-def setup_grid_values() -> list[dict[str, str|int]]:
+
+def setup_grid_values() -> list[dict[str, str | int]]:
     base_grids = {}
     for i in range(1, 6):
-        base_grids[f'letter_{i}'] = ''
+        base_grids[f"letter_{i}"] = ""
 
     for i in range(1, 6):
-        base_grids[f'letter_{i}_score'] = -1
+        base_grids[f"letter_{i}_score"] = -1
 
     grid_values = []
     for i in range(6):
         grid_values.append(base_grids)
-    
+
     return grid_values
+
 
 grid_values = setup_grid_values()
 
 column_defs = []
 for column in grid_values[0].keys():
     col_num = int(column[7:8])
-    is_score_column = column[-6:] == '_score'
+    is_score_column = column[-6:] == "_score"
     column_def = {
-        "field": column, 
-        'cellStyle': {
+        "field": column,
+        "cellStyle": {
             "styleConditions": [
                 {
                     "condition": f"params.data.letter_{col_num}_score == 2",
@@ -50,8 +52,8 @@ for column in grid_values[0].keys():
         },
     }
     if is_score_column:
-        column_def['hide'] = 'true'
-    
+        column_def["hide"] = "true"
+
     column_defs.append(column_def)
 
 default_cell_details = "text-center"
@@ -61,7 +63,12 @@ grid = dag.AgGrid(
     rowData=grid_values,
     columnDefs=column_defs,
     columnSize="sizeToFit",
-    dashGridOptions={"animateRows": False, "headerHeight":0, "editable": True, "flex": 1},
+    dashGridOptions={
+        "animateRows": False,
+        "headerHeight": 0,
+        "editable": True,
+        "flex": 1,
+    },
 )
 
 input_field = html.Div(
@@ -75,37 +82,45 @@ input_field = html.Div(
 wordle = Wordle()
 wordle.create_new_game()
 
+
 @app.callback(
     Output("wordle-grid", "rowData"),
     Input("word_input", "value"),
-    State("wordle-grid", "rowData")
+    State("wordle-grid", "rowData"),
 )
-def update(word_input:str, row_data:list[dict[str, str|int]]):
+def update(word_input: str, row_data: list[dict[str, str | int]]):
     if word_input is None or len(word_input) != 5:
         return row_data
-    
+
     word_score = wordle.make_guess(word_input)
 
     if word_score is None:
         return row_data
-    
+
     to_update_index = 0
     for i in range(6):
-        if row_data[i]['letter_1_score'] == -1:
+        if row_data[i]["letter_1_score"] == -1:
             to_update_index = i
             break
-    
-    for i, letter in enumerate(word_input.upper()):
-        row_data[to_update_index][f'letter_{i+1}'] = letter
 
+    for i, letter in enumerate(word_input.upper()):
+        row_data[to_update_index][f"letter_{i + 1}"] = letter
 
     for i, letter_score in enumerate(word_score):
-        row_data[to_update_index][f'letter_{i+1}_score'] = letter_score
+        row_data[to_update_index][f"letter_{i + 1}_score"] = letter_score
 
     return row_data
 
-app.layout = html.Div([html.H4("Wordle"), html.Div(grid, style={"width": 300}), html.Div(id="quickstart-output"), input_field])
+
+app.layout = html.Div(
+    [
+        html.H4("Wordle"),
+        html.Div(grid, style={"width": 300}),
+        html.Div(id="quickstart-output"),
+        input_field,
+    ]
+)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

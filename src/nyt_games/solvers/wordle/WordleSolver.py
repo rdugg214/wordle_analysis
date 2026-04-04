@@ -3,18 +3,21 @@ from abc import abstractmethod
 from nyt_games.games.wordle.wordle_game import Wordle
 from nyt_games.solvers.wordle.GameDetails import GameDetails
 
+
 class WordleSolver:
     def __init__(self) -> None:
         pass
 
-    def attempt_solve(self, wordle_game: Wordle, number_guesses: int = 6) -> GameDetails:
+    def attempt_solve(
+        self, wordle_game: Wordle, number_guesses: int = 6
+    ) -> GameDetails:
         game_details = GameDetails()
         for i in range(number_guesses):
             guess_word = self.guess()
             guess_score = wordle_game.make_guess(guess_word)
 
             game_details.add_guess(guess_word, guess_score)
-            
+
             if self._is_solved(guess_score):
                 break
 
@@ -24,19 +27,18 @@ class WordleSolver:
             game_details.ran_out_of_guesses()
 
         return game_details
-    
+
     @abstractmethod
     def guess(self) -> str:
         raise NotImplementedError
-    
+
     @abstractmethod
     def prepare_next_guess(self, guess_word: str, guess_score: list[int]):
         raise NotImplementedError
-    
-    def _is_solved(self, guess_score:list[int]) -> bool:
+
+    def _is_solved(self, guess_score: list[int]) -> bool:
         total_score = 0
         for score in guess_score:
             total_score += score
 
         return total_score == 10
-
