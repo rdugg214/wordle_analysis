@@ -33,12 +33,29 @@ def test_guess_duplicated_letters():
 def test_full_games():
     wordle = Wordle()
     wordle.create_new_game("abbey")
-    assert [1, 1, 2, 2, 0] == wordle.make_guess("babes")
-    assert [1, 1, 2, 2, 0] == wordle.make_guess("babes")
-    assert [1, 1, 2, 2, 0] == wordle.make_guess("babes")
-    assert [1, 1, 2, 2, 0] == wordle.make_guess("babes")
-    assert [1, 1, 2, 2, 0] == wordle.make_guess("babes")
-    assert [1, 1, 2, 2, 0] == wordle.make_guess("babes")
+    wordle.make_guess("kebab")
+    wordle.make_guess("kebab")
+    wordle.make_guess("kebab")
+    wordle.make_guess("kebab")
+    wordle.make_guess("kebab")
+    wordle.make_guess("kebab")
 
-    assert wordle.make_guess("babes") is None
+    assert wordle.make_guess("kebab") is None
+
+    wordle = Wordle()
+    wordle.create_new_game("abbey")
+    wordle.make_guess("kebab")
+    wordle.make_guess("invalid word")
+    wordle.make_guess("kebab")
+    wordle.make_guess("invalid word")
+    wordle.make_guess("kebab")
+    wordle.make_guess("invalid word")
+    wordle.make_guess("kebab")
+    wordle.make_guess("invalid word")
+    wordle.make_guess("kebab")
+    wordle.make_guess("invalid word")
+    wordle.make_guess("kebab")
+    wordle.make_guess("invalid word")
+
+    assert wordle.make_guess("kebab") is None
 

@@ -22,10 +22,10 @@ class Wordle():
             print(f"Sorry you already ran out of guesses, the word was '{self.target_word}', try again")
             return None
 
-        self.guess_count += 1
-
         if self.__is_invalid(guess_word):
             return None
+        
+        self.guess_count += 1
 
         guess_accuracy = self._compare_words(guess_word)
 
